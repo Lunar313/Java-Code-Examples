@@ -31,10 +31,12 @@ public class Person {
      * 
      * @param name the person's name
      * @param age the person's age
+     * @throws IllegalArgumentException if name is null/empty or age is negative
      */
     public Person(String name, int age) {
-        this.name = name;
-        setAge(age); // Using setter for validation
+        // Using setters to ensure consistent validation
+        setName(name);
+        setAge(age);
     }
     
     // Getters and Setters with validation
@@ -52,12 +54,14 @@ public class Person {
      * Sets the person's name.
      * 
      * @param name the name to set
+     * @throws IllegalArgumentException if name is null or empty
      */
     public void setName(String name) {
-        // Tip: Validate input in setters
-        if (name != null && !name.trim().isEmpty()) {
-            this.name = name;
+        // Tip: Validate input in setters and provide clear feedback
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
         }
+        this.name = name;
     }
     
     /**
@@ -73,12 +77,14 @@ public class Person {
      * Sets the person's age.
      * 
      * @param age the age to set (must be non-negative)
+     * @throws IllegalArgumentException if age is negative
      */
     public void setAge(int age) {
-        // Tip: Protect against invalid data
-        if (age >= 0) {
-            this.age = age;
+        // Tip: Protect against invalid data and provide clear feedback
+        if (age < 0) {
+            throw new IllegalArgumentException("Age cannot be negative");
         }
+        this.age = age;
     }
     
     /**
@@ -113,8 +119,12 @@ public class Person {
         person1.setAge(30);
         System.out.println("Updated person: " + person1);
         
-        // Demonstrating validation (negative age won't be set)
-        person2.setAge(-5);
-        System.out.println("After invalid age update: " + person2);
+        // Demonstrating validation with exception handling
+        try {
+            person2.setAge(-5);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Validation error: " + e.getMessage());
+        }
+        System.out.println("After invalid age attempt: " + person2);
     }
 }
