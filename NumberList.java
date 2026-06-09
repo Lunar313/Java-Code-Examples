@@ -1,0 +1,30 @@
+import java.util.*;
+
+public class NumberList{
+
+   public class NumberNode{
+    int value; 
+    NumberNode next;
+    public NumberNode(int value) {
+        this.value = value;
+        this.next = null;
+    }
+   }
+    public void add(int value) {
+        NumberNode q = new NumberNode(value); // neuer Knoten, mit aktuellem Wert
+        NumberNode p = head; // Hilfsknoten zum Iterieren
+        NumberNode prev = null;
+
+        while (p != null && p.value < value) { // korrekte Position zum Einfügen finden
+            prev = p; // "Einhängen" des neuen Knotens
+            p = p.next;
+            }
+            q.next = p;
+            if (p == head) { // neuer Knoten ganz vorne eingefügt? 'head' ist zu ändern!
+            head = q;
+            } else
+            { prev.next =
+            q;
+            }
+            }
+}
